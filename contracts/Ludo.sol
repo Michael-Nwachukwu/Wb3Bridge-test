@@ -13,7 +13,7 @@ contract Ludo {
         uint256 id;
         uint8 numberOfPlayers;
         string[] colors;
-        address[] players;
+        address[4] players;
         uint8 nextColorindex;
     }
 
