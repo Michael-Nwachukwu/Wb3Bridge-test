@@ -50,7 +50,7 @@ contract Ludo {
         newPlayer.player = msg.sender;
         newPlayer.position = ludoBoard[0];
 
-        game.players.push(msg.sender);
+        game.players[game.nextColorindex] = msg.sender;
         game.nextColorindex++;
         game.numberOfPlayers++;
 
