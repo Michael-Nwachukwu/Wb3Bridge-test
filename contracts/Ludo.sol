@@ -41,13 +41,14 @@ contract Ludo {
     }
 
     function joinGame(uint256 _gameId) external {
-        require(!hasJoinedGame[msg.sender][_gameId], "Player already joined");
+        require(!hasJoinedGame[msg.sender][_gameId], "Already joined");
         Game storage game = games[_gameId];
         require(game.nextColorindex < game.colors.length, "Game is full");
 
         Player storage newPlayer = players[msg.sender];
         newPlayer.color = game.colors[game.nextColorindex];
         newPlayer.player = msg.sender;
+        newPlayer.position = ludoBoard[0];
 
         game.players.push(msg.sender);
         game.nextColorindex++;
@@ -69,10 +70,17 @@ contract Ludo {
 
     }
 
-    function play() external {
+    function play(uint256 _gameId) external {
 
-        rollDice(msg.sender);
-        
+        require(hasJoinedGame[msg.sender][_gameId], "Player not in game");
+
+        Game storage game = games[_gameId];
+        Player storage player = players[msg.sender];
+
+        uint8 moves = rollDice(msg.sender);
+
+        player.position = ludoBoard[moves];
+
     }
 
 
